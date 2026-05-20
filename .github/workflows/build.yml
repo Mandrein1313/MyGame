@@ -1,0 +1,50 @@
+name: Android Cloud Build Pipeline
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  workflow_dispatch:
+
+# 🌟 [FIXED] เปิดสิทธิ์ให้บอทคลาวด์เขียนหน้า Releases ได้สำเร็จ ป้องกันปัญหาล็อกเออเร่อ 403
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up JDK 17
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'temurin'
+        java-version: '17'
+        cache: gradle
+
+    # 🌟 บังคับคลาวด์ใช้ Gradle 8.0 สยบปัญหาความเข้ากันได้ของ Dependency
+    - name: Setup Gradle 8.0
+      uses: gradle/actions/setup-gradle@v4
+      with:
+        gradle-version: '8.0'
+
+    - name: Grant execute permission for gradlew
+      run: chmod +x ./gradlew
+
+    - name: Build Debug APK via Gradle
+      run: ./gradlew assembleDebug
+
+    # 🚀 [CHANGED] ตัดระบบ Upload Artifact เก่าทิ้ง ข้ามขั้นมาสร้างหน้า Releases และสลับโยนไฟล์ APK สดตรงสู่หน้าเว็บทันที!
+    - name: Create GitHub Release and Upload APK Direct
+      uses: softprops/action-gh-release@v1
+      with:
+        tag_name: "latest"
+        release_name: "MiniStudio Latest Build"
+        draft: false
+        prerelease: false
+        overwrite: true
+        files: app/build/outputs/apk/debug/*.apk
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
