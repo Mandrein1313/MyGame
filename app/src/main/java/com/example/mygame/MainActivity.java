@@ -1,5 +1,5 @@
 package com.example.mygame;
-{{{
+
 import android.app.Activity;
 import android.os.Bundle;
 import com.example.mygame.R;
