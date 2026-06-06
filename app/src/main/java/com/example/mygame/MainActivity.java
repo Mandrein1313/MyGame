@@ -1,93 +1,22 @@
-package com.example.mygame;
+// UnknownFile.java
 
 import android.os.Bundle;
-import android.app.Activity;
-import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
-import java.util.Calendar;
+import androidx.appcompat.app.AppCompatActivity;
 
-public class MainActivity extends Activity {
-    private TextView tvWeather;
-    private TextView tvLocation;
-    private String location = "กรุงเทพมหานคร";
+public class UnknownFile extends AppCompatActivity {
+
+    private String[] productList = {"สินค้า 1", "สินค้า 2", "สินค้า 3", "สินค้า 4", "สินค้า 5"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // ตรวจสอบ Bundle savedInstanceState
-        if (savedInstanceState != null) {
-            location = savedInstanceState.getString("location");
-        }
-
-        tvWeather = findViewById(R.id.tvWeather);
-        tvLocation = findViewById(R.id.tvLocation);
-
-        // แสดงข้อมูลพยากรณ์อากาศ
-        showWeather();
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putString("location", location);
-    }
-
-    private void showWeather() {
-        try {
-            // ค้นหาข้อมูลพยากรณ์อากาศ
-            WeatherInfo weatherInfo = getWeatherInfo(location);
-
-            // แสดงข้อมูลพยากรณ์อากาศ
-            tvWeather.setText(weatherInfo.getWeather());
-            tvLocation.setText(location);
-
-            // ตรวจสอบสภาพอากาศและแจ้งเตือนหากจำเป็น
-            checkWeatherAlert(weatherInfo);
-        } catch (Exception e) {
-            Toast.makeText(this, "ข้อผิดพลาดในการค้นหาข้อมูลพยากรณ์อากาศ", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    private WeatherInfo getWeatherInfo(String location) {
-        // ค้นหาข้อมูลพยากรณ์อากาศจาก API หรือฐานข้อมูล
-        // ในที่นี้ใช้ข้อมูลที่กำหนดไว้ล่วงหน้าเป็นตัวอย่าง
-        WeatherInfo weatherInfo = new WeatherInfo();
-        weatherInfo.setWeather("มีเมฆบางส่วน");
-        weatherInfo.setTemperature(25);
-        return weatherInfo;
-    }
-
-    private void checkWeatherAlert(WeatherInfo weatherInfo) {
-        // ตรวจสอบสภาพอากาศและแจ้งเตือนหากจำเป็น
-        if (weatherInfo.getWeather().contains("ฝน")) {
-            Toast.makeText(this, "มีฝนตก今日", Toast.LENGTH_SHORT).show();
-        } else if (weatherInfo.getTemperature() > 30) {
-            Toast.makeText(this, "มีอุณหภูมิสูง今日", Toast.LENGTH_SHORT).show();
-        }
-    }
-}
-
-class WeatherInfo {
-    private String weather;
-    private int temperature;
-
-    public String getWeather() {
-        return weather;
-    }
-
-    public void setWeather(String weather) {
-        this.weather = weather;
-    }
-
-    public int getTemperature() {
-        return temperature;
-    }
-
-    public void setTemperature(int temperature) {
-        this.temperature = temperature;
+        ListView listView = (ListView) findViewById(R.id.listView);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, productList);
+        listView.setAdapter(adapter);
     }
 }
