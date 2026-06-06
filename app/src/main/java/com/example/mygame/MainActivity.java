@@ -1,6 +1,6 @@
 // นี่คือตัวอย่างโค้ดที่แก้ไขแล้ว โดยสมมติว่า UnknownFile.java คือ MainActivity.java
 package com.example.mygame;
-
+<<<
 import android.app.Activity;
 import android.os.Bundle;
 import com.example.mygame.R; // การ import R ที่ถูกต้อง
