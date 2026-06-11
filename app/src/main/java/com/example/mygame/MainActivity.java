@@ -1,5 +1,5 @@
 package com.example.mygame;
-<<<<<<
+
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -37,4 +37,9 @@ public class MainActivity extends Activity {
             Toast.makeText(this, "Button enabled", Toast.LENGTH_SHORT).show();
         }
     }
+    @Override
+protected void onDestroy() {
+    super.onDestroy();
+}
+
 }
