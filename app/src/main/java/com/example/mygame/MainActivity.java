@@ -1,5 +1,5 @@
 package com.example.mygame;
-
+<<<<<<
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
